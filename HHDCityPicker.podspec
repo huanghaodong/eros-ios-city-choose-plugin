@@ -60,11 +60,9 @@ Pod::Spec.new do |s|
 
 
   s.source_files  = "ProvinceCityArea/**/*.{h,m}"
-  s.resource_bundles = {
-       'MyPlaceTxt' => ['ProvinceCityArea/*.txt']
-     }
+  #s.resource_bundles = {'MyPlaceTxt' => ['ProvinceCityArea/*.txt']}
   #s.exclude_files = "Classes/Exclude"
-
+	s.resources = "ProvinceCityArea/**/*.txt"
   s.public_header_files = "ProvinceCityArea/**/*.h"
 
 
