@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "HHDCityPicker"
-  s.version      = "0.0.2"
+  s.version      = "0.0.1"
   s.summary      = "FileHHDCityPicker File"
 
   # This description is used to generate tags and improve search results.
@@ -54,42 +54,10 @@ Pod::Spec.new do |s|
   #
 
   s.author             = { "huanghaodong" => "534634672@qq.com" }
-  # Or just: s.author    = "huanghaodong"
-  # s.authors            = { "huanghaodong" => "534634672@qq.com" }
-  # s.social_media_url   = "http://twitter.com/huanghaodong"
-
-  # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  If this Pod runs only on iOS or OS X, then specify the platform and
-  #  the deployment target. You can optionally include the target after the platform.
-  #
-
-  # s.platform     = :ios
-  # s.platform     = :ios, "5.0"
-
-  #  When using multiple platforms
-  # s.ios.deployment_target = "5.0"
-  # s.osx.deployment_target = "10.7"
-  # s.watchos.deployment_target = "2.0"
-  # s.tvos.deployment_target = "9.0"
-
-
-  # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  Specify the location from where the source should be retrieved.
-  #  Supports git, hg, bzr, svn and HTTP.
-  #
 
   s.source       = { :git => "https://github.com/huanghaodong/eros-ios-city-choose-plugin.git", :tag => "#{s.version}" }
 
 
-  # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  CocoaPods is smart about how it includes source code. For source files
-  #  giving a folder will include any swift, h, m, mm, c & cpp files.
-  #  For header files it will include any header in the folder.
-  #  Not including the public_header_files will make all headers public.
-  #
 
   s.source_files  = "ProvinceCityArea/**/*.{h,m}"
   s.resource_bundles = {
@@ -100,13 +68,7 @@ Pod::Spec.new do |s|
   s.public_header_files = "ProvinceCityArea/**/*.h"
 
 
-  # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  A list of resources included with the Pod. These are copied into the
-  #  target bundle with a build phase script. Anything else will be cleaned.
-  #  You can preserve files from being cleaned, please don't preserve
-  #  non-essential files like tests, examples and documentation.
-  #
+
 
   # s.resource  = "icon.png"
   # s.resources = "Resources/*.png"
