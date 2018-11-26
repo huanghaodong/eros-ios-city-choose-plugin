@@ -8,7 +8,7 @@
 1. 打开iOS目录`工程目录/platforms/ios/WeexEros`，编辑Podfile文件，增加以下代码；
 
 ```
- pod 'HHDCityPicker', :git => 'https://github.com/huanghaodong/eros-ios-city-choose-plugin.git', :tag => '0.0.2'
+ pod 'HHDCityPicker', :git => 'https://github.com/huanghaodong/eros-ios-city-choose-plugin.git', :tag => '0.0.3'
 ```
 
 2. 到此目录下执行 `pod update`
