@@ -32,7 +32,14 @@
 @property (nonatomic, strong) NSString *currentSelectProvince;
 @property (nonatomic, strong) NSString *currentSelectCity;
 @property (nonatomic, strong) NSString *currentSelectArea;
+@property (nonatomic, strong) NSString *currentSelectProvinceCode;
+@property (nonatomic, strong) NSString *currentSelectCityCode;
+@property (nonatomic, strong) NSString *currentSelectAreaCode;
+@property (nonatomic) NSInteger currentSelectProvinceRow;
+@property (nonatomic) NSInteger currentSelectCityRow;
+@property (nonatomic) NSInteger currentSelectAreaRow;
 
+// 前端传参
 @property (nonatomic, strong) NSString *setTitleText;
 @property (nonatomic, strong) NSString *setCancelText;
 @property (nonatomic, strong) NSString *setSubmitText;
@@ -41,6 +48,8 @@
 @property (nonatomic, strong) NSString *setCancelColor;
 @property (nonatomic, strong) NSString *setTitleSize;
 @property (nonatomic, strong) NSString *setSubCalSize;
+@property (nonatomic, strong) NSString *addressType;
+@property (nonatomic, strong) NSArray *address;
 // 布局控件
 @property (nonatomic, strong) UIButton *bgV;
 
@@ -56,6 +65,8 @@
             self.currentSelectCity = lastContent[1];
             self.currentSelectArea = lastContent.lastObject;
         }
+        self.addressType = options[@"addressType"]?options[@"addressType"]:@"default";
+        self.address = options[@"address"];
         self.setTitleText = options[@"setTitleText"];
         self.setCancelText = options[@"setCancelText"];
         self.setSubmitText = options[@"setSubmitText"];
@@ -106,19 +117,25 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     if (component == 0) {
+        self.currentSelectProvinceRow = row;
         self.currentSelectProvince = self.provinceArr[row];
+        self.currentSelectProvinceCode = ((HmAddressModel *)self.allDataArr[row]).code;
         self.currentSelectCity = nil;
         self.currentSelectArea = nil;
         [self calculationCityAreaArr];
         [pickerView selectRow:[self.cityArr indexOfObject:self.currentSelectCity] inComponent:1 animated:YES];
         [pickerView selectRow:[self.areaArr indexOfObject:self.currentSelectArea] inComponent:2 animated:YES];
     }else if (component == 1) {
+        self.currentSelectCityRow = row;
         self.currentSelectCity = self.cityArr[row];
+        self.currentSelectCityCode = ((HmAddressCityModel *)(((HmAddressModel *)self.allDataArr[self.currentSelectProvinceRow]).city)[row]).code;
         self.currentSelectArea = nil;
         [self calculationCityAreaArr];
         [pickerView selectRow:[self.areaArr indexOfObject:self.currentSelectArea] inComponent:2 animated:YES];
     }else {
+         self.currentSelectAreaRow = row;
         self.currentSelectArea = self.areaArr[row];
+        self.currentSelectAreaCode = ((HmAreaModel *)(((HmAddressCityModel *)(((HmAddressModel *)self.allDataArr[self.currentSelectProvinceRow]).city)[self.currentSelectCityRow]).area)[row]).code;
     }
     
 }
@@ -253,12 +270,11 @@
         self.confirmSelect(@[self.currentSelectProvince, self.currentSelectCity, self.currentSelectArea]);
     }
     if (self.callback) {
-        NSString* str_C;
-        str_C = [NSString stringWithFormat:@"%@,%@,%@",self.currentSelectProvince, self.currentSelectCity,  self.currentSelectArea];
-
+         NSDictionary *backObj = @{@"provinceStr":self.currentSelectProvince, @"provinceCode":self.currentSelectProvinceCode, @"cityStr":self.currentSelectCity,@"cityCode":self.currentSelectCityCode,@"areaStr":self.currentSelectArea,@"areaCode":self.currentSelectAreaCode};
+        
 
         if (self.callback) {
-            self.callback(str_C,NO);
+            self.callback(backObj,NO);
             self.callback=nil;
         }
         
@@ -269,11 +285,17 @@
 /// 解析地址
 - (void)HmGetArea {
     [self removeAllObjectFromArea];
-    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"aiai_area.txt" ofType:nil]];
-    if (!data) {
-        return;
+    NSArray *allArr = nil;
+    if([self.addressType  isEqualToString:@"custom"]){
+        allArr = [HmAddressModel arrayOfModelsFromDictionaries:self.address error:nil];
+    }else{
+        NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"aiai_area.txt" ofType:nil]];
+        if (!data) {
+            return;
+        }
+       allArr = [HmAddressModel arrayOfModelsFromData:data error:nil];
     }
-    NSArray *allArr = [HmAddressModel arrayOfModelsFromData:data error:nil];
+    
     self.allDataArr = [NSArray arrayWithArray:allArr];
     [self calculationCityAreaArr];
     [self.pickerV selectRow:[self.provinceArr indexOfObject:self.currentSelectProvince] inComponent:0 animated:YES];
@@ -295,21 +317,27 @@
     [self.areaArr removeAllObjects];
     if (!self.currentSelectProvince) {
         self.currentSelectProvince = ((HmAddressModel *)self.allDataArr[0]).name;
+        self.currentSelectProvinceCode =((HmAddressModel *)self.allDataArr[0]).code;
+        self.currentSelectProvinceRow =0;
     }
     for (HmAddressModel *model in self.allDataArr) {
         [self.provinceArr addObject:model.name];
         if ([self.currentSelectProvince isEqualToString:model.name]) {
             if (!self.currentSelectCity) {
                 self.currentSelectCity = ((HmAddressCityModel *)model.city[0]).name;
+                self.currentSelectCityCode = ((HmAddressCityModel *)model.city[0]).code;
+                self.currentSelectCityRow = 0;
             }
             for (HmAddressCityModel *mo in model.city) {
                 [self.cityArr addObject:mo.name];
                 if ([mo.name isEqualToString:self.currentSelectCity]) {
                     if (!self.currentSelectArea) {
-                        self.currentSelectArea = mo.area.firstObject;
+                        self.currentSelectArea = ((HmAreaModel *)mo.area[0]).name;
+                        self.currentSelectAreaCode = ((HmAreaModel *)mo.area[0]).code;
+                        self.currentSelectAreaRow = 0;
                     }
-                    for (NSString *aa in mo.area) {
-                        [self.areaArr addObject:aa];
+                    for (HmAreaModel *aa in mo.area) {
+                        [self.areaArr addObject:aa.name];
                     }
                 }
             }

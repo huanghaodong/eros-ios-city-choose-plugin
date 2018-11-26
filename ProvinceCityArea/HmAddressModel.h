@@ -12,6 +12,7 @@
 @interface HmAddressModel : JSONModel
 
 @property (nonatomic, strong) NSString<Optional> *name;
+@property (nonatomic, strong) NSString<Optional> *code;
 @property (nonatomic, strong) NSArray<HmAddressCityModel, Optional> *city;
 
 @end
