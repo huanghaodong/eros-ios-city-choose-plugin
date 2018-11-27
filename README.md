@@ -1,4 +1,4 @@
-![avatar](http://thyrsi.com/t6/617/1543289275x2890191781.gif)
+![avatar](http://thyrsi.com/t6/617/1543290451x2728278835.gif)
 
 **集成方式**
 
