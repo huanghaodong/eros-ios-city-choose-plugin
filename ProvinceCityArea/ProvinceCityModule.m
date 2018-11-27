@@ -17,7 +17,6 @@
 
 WX_PlUGIN_EXPORT_MODULE(choosecity, ProvinceCityModule)
 @implementation ProvinceCityModule
-@synthesize weexInstance;
 
 WX_EXPORT_METHOD(@selector(open:callback:))
 
