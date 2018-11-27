@@ -10,18 +10,7 @@
 
 @interface ProvinceCityModule()
 
-@property(nonatomic,copy)NSString *title;
-@property(nonatomic,strong)UIColor *titleColor;
-@property(nonatomic,copy)NSString *cancelTitle;
-@property(nonatomic,copy)NSString *confirmTitle;
-@property(nonatomic,strong)UIColor *cancelTitleColor;
-@property(nonatomic,strong)UIColor *confirmTitleColor;
 
-@property (nonatomic, strong) NSString *currentProvince;
-@property (nonatomic, strong) NSString *currentCity;
-@property (nonatomic, strong) NSString *currentArea;
-
-@property (nonatomic, strong) NSDate *selectedDate;
 
 @property(nonatomic,copy)WXModuleKeepAliveCallback callback;
 @end
