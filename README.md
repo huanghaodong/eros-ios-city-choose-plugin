@@ -53,7 +53,7 @@
 | areaCode | String | 三级编码 |
 
 
-	```js
+```
   	choosecity.open({
  		setSubmitText:'确定',//确定按钮文字
  		setCancelText:'取消',//取消按钮文字
@@ -83,9 +83,9 @@
 		      },(place)=>{
 		              
 		      })
-  ```
+```
  * 返回值
-```js
+```
     {
       provinceStr:"湖北",
       provinceCode:"10000",
