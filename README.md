@@ -1,4 +1,4 @@
-![avatar](http://thyrsi.com/t6/617/1543290451x2728278835.gif)
+![avatar](http://chuantu.xyz/t6/702/1566271847x1033347913.gif)
 
 **集成方式**
 
